@@ -1,0 +1,10 @@
+version: '3.2'
+
+services:
+  csr:
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+    environment:
+      VIRTUAL_HOST: csr.lan
+      VIRTUAL_PORT: 80

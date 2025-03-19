@@ -1,0 +1,19 @@
+version: '3.2'
+
+services:
+  csr:
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    container_name: csr
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+    environment:
+      TZ: "Asia/Jakarta"
+
+networks:
+  default:
+    name: nginx-proxy
+    external: true

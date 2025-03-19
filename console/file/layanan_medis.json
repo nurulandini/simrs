@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "layanan": "Konsultasi Dokter Umum",
+    "deskripsi": "Konsultasi kesehatan dengan dokter umum",
+    "biaya": 50000,
+    "created_at": 1710451200,
+    "updated_at": 1710451200,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 2,
+    "layanan": "Pemeriksaan Tekanan Darah",
+    "deskripsi": "Pengecekan tekanan darah",
+    "biaya": 30000,
+    "created_at": 1710451201,
+    "updated_at": 1710451201,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 3,
+    "layanan": "Cek Gula Darah",
+    "deskripsi": "Tes kadar gula dalam darah",
+    "biaya": 50000,
+    "created_at": 1710451202,
+    "updated_at": 1710451202,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 4,
+    "layanan": "Cek Kolesterol",
+    "deskripsi": "Tes kadar kolesterol dalam darah",
+    "biaya": 75000,
+    "created_at": 1710451203,
+    "updated_at": 1710451203,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 5,
+    "layanan": "Pemeriksaan THT",
+    "deskripsi": "Pengecekan kesehatan telinga, hidung, tenggorokan",
+    "biaya": 75000,
+    "created_at": 1710451204,
+    "updated_at": 1710451204,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 6,
+    "layanan": "Nebulizer",
+    "deskripsi": "Terapi uap untuk gangguan pernapasan",
+    "biaya": 80000,
+    "created_at": 1710451205,
+    "updated_at": 1710451205,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 7,
+    "layanan": "Pembersihan Telinga",
+    "deskripsi": "Membersihkan kotoran telinga",
+    "biaya": 50000,
+    "created_at": 1710451206,
+    "updated_at": 1710451206,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 8,
+    "layanan": "Perawatan Luka Ringan",
+    "deskripsi": "Pembersihan dan perban luka ringan",
+    "biaya": 75000,
+    "created_at": 1710451207,
+    "updated_at": 1710451207,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 9,
+    "layanan": "Jahitan Luka",
+    "deskripsi": "Penjahitan luka kecil hingga sedang",
+    "biaya": 150000,
+    "created_at": 1710451208,
+    "updated_at": 1710451208,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 10,
+    "layanan": "Infus Cairan",
+    "deskripsi": "Pemberian cairan infus untuk dehidrasi ringan",
+    "biaya": 200000,
+    "created_at": 1710451209,
+    "updated_at": 1710451209,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 11,
+    "layanan": "Konsultasi Dokter Anak",
+    "deskripsi": "Pemeriksaan kesehatan anak",
+    "biaya": 60000,
+    "created_at": 1710451210,
+    "updated_at": 1710451210,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 12,
+    "layanan": "Imunisasi Anak",
+    "deskripsi": "Pemberian vaksin dasar untuk anak-anak",
+    "biaya": 100000,
+    "created_at": 1710451211,
+    "updated_at": 1710451211,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 13,
+    "layanan": "Pemeriksaan Tumbuh Kembang",
+    "deskripsi": "Pemeriksaan tinggi, berat, dan perkembangan anak",
+    "biaya": 50000,
+    "created_at": 1710451212,
+    "updated_at": 1710451212,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 14,
+    "layanan": "Skrining Anemia pada Anak",
+    "deskripsi": "Tes kadar hemoglobin anak",
+    "biaya": 60000,
+    "created_at": 1710451213,
+    "updated_at": 1710451213,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 15,
+    "layanan": "Pemeriksaan ISPA",
+    "deskripsi": "Deteksi infeksi saluran pernapasan akut",
+    "biaya": 75000,
+    "created_at": 1710451214,
+    "updated_at": 1710451214,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 16,
+    "layanan": "Konsultasi Dokter Gigi",
+    "deskripsi": "Pemeriksaan kesehatan gigi dan mulut",
+    "biaya": 75000,
+    "created_at": 1710451215,
+    "updated_at": 1710451215,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 17,
+    "layanan": "Pembersihan Karang Gigi",
+    "deskripsi": "Scaling ringan untuk membersihkan karang gigi",
+    "biaya": 150000,
+    "created_at": 1710451216,
+    "updated_at": 1710451216,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 18,
+    "layanan": "Pencabutan Gigi Sederhana",
+    "deskripsi": "Pencabutan gigi yang sudah rusak",
+    "biaya": 100000,
+    "created_at": 1710451217,
+    "updated_at": 1710451217,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 19,
+    "layanan": "Tambal Gigi",
+    "deskripsi": "Penambalan gigi berlubang sederhana",
+    "biaya": 150000,
+    "created_at": 1710451218,
+    "updated_at": 1710451218,
+    "created_by": 1,
+    "updated_by": 1
+  },
+  {
+    "id": 20,
+    "layanan": "Perawatan Gigi Berlubang",
+    "deskripsi": "Pemeriksaan dan perawatan gigi berlubang",
+    "biaya": 120000,
+    "created_at": 1710451219,
+    "updated_at": 1710451219,
+    "created_by": 1,
+    "updated_by": 1
+  }
+]

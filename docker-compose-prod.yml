@@ -1,0 +1,25 @@
+version: '3.2'
+
+services:
+  csr:
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+    environment:
+      VIRTUAL_HOST: csr.medan.go.id
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: csr.medan.go.id
+      LETSENCRYPT_EMAIL: bappeda_medan@protonmail.ch
+
+  redirect_csr:
+    image: nginx
+    container_name: redirect_csr
+    restart: always
+    volumes:
+      - ./docker/nginx/redirect.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      VIRTUAL_HOST: csr.pemkomedan.go.id
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: csr.pemkomedan.go.id
+      LETSENCRYPT_EMAIL: bappeda_medan@protonmail.ch
+      LETSENCRYPT_SINGLE_DOMAIN_CERTS: true

@@ -1,0 +1,13 @@
+version: '3.2'
+
+services:
+  csr:
+    volumes:
+      # Mount source-code for development
+      - ./:/app/csr
+    environment:
+      VIRTUAL_HOST: bappeda2.pemkomedan.go.id
+      VIRTUAL_PORT: 80
+      VIRTUAL_PATH: /csr
+      LETSENCRYPT_HOST: bappeda2.pemkomedan.go.id
+      LETSENCRYPT_EMAIL: bappeda_medan@protonmail.ch

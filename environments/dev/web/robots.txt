@@ -1,0 +1,4 @@
+User-agent: *
+Allow : /site
+
+Sitemap: https://csr.medan.go.id/sitemap.xml

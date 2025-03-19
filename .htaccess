@@ -1,0 +1,46 @@
+# "-Indexes" will have Apache block users from browsing folders without a default document
+# Usually you should leave this activated, because you shouldn't allow everybody to surf through
+# every folder on your server (which includes rather private places like CMS system folders).
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+
+# Block access to "hidden" directories whose names begin with a period. This
+# includes directories used by version control systems such as Subversion or Git.
+<IfModule mod_rewrite.c>
+  RewriteCond %{SCRIPT_FILENAME} -d
+  RewriteCond %{SCRIPT_FILENAME} -f
+  RewriteRule "(^|/)\." - [F]
+</IfModule>
+
+
+# Block bot User Agent
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_USER_AGENT} (EvilBotHere|SpamSpewer|SecretAgentAgent|SemrushBot|BingBot) [NC]
+  RewriteRule (.*) - [F,L]
+</IfModule>
+
+# Block access to backup and source files
+# These files may be left by some text/html editors and
+# pose a great security danger, when someone can access them
+<FilesMatch "(\.(bak|bat|config|sql|fla|md|psd|ini|log|sh|inc|swp|dist|yml|json|lock|bowerrc|out)|~|init|yii|Vagrantfile|composer\.json|composer\.lock)$">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} -d
+
+RewriteRule ^(.+[^/])$ %{REQUEST_URI}/ [L,R=301]
+
+# rewrite rule for modules
+RewriteRule ^/?$ web/$1
+
+# redirect git folder to 404
+RedirectMatch 404 /\.git
