@@ -43,25 +43,25 @@ Aplikasi ini adalah sistem manajemen klinik yang dirancang untuk membantu klinik
 
 ## REQUIREMENTS
 
-The minimum requirement by this project that your Web server supports PHP 8.1.
+Persyaratan minimum untuk proyek ini adalah server Web yang mendukung PHP 8.1.
 
 ## INSTALLATION
 
-Install neccesary package :
+Install paket yang diperlukan:
 
 ```
 composer install
 ```
 
-Open console/terminal
+Buka konsol/terminal
 
-Initiate project state, choose project state you want to use, `0` for development, and `1` for production :
+Inisialisasi status proyek, pilih status proyek yang ingin kamu gunakan, `0` untuk pengembangan, dan `1` untuk produksi:
 
 ```
 php init
 ```
 
-Open file `config/components.php`, and change `dbname`, `username` and `password`, for example:
+Buka file `config/components.php`, dan ubah `dbname`, `username`, dan `password`, contohnya:
 
 ```php
 return [
@@ -80,37 +80,37 @@ return [
 ];
 ```
 
-Run migration for RBAC :
+Jalankan migrasi untuk RBAC :
 
 ```
 php yii migrate --migrationPath=@yii/rbac/migrations
 ```
 
-Run migration for Admin :
+Jalankan migrasi untuk Admin:
 
 ```
 php yii migrate --migrationPath=@mdm/admin/migrations
 ```
 
-Run migration for the rest of application :
+Jalankan migrasi untuk sisa aplikasi:
 
 ```
 php yii migrate
 ```
 
-Run this to add admin user, change `username` and `password` with you like :
+Jalankan untuk menambahkan user admin, ubah `username` dan `password` sesuai keiinginan :
 
 ```
 php yii config/tambah-admin username password
 ```
 
-You can then access the application through the following URL :
+Kamu bisa mengakses aplikasi melalui URL berikut:
 
 ```
 http://localhost/simrs
 ```
 
-You can inject data with :
+Lakukan perintah di bawah untuk melakukan injeksi data ke database :
 
 tambah data provinsi :
 
