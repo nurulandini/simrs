@@ -156,7 +156,7 @@ php yii insert/layanan layanan_medis
 
 ## Lisensi
 
-Aplikasi ini dilisensikan di bawah lisensi MIT. Lihat file LICENSE untuk informasi lebih lanjut.
+Aplikasi ini dilisensikan di bawah lisensi Apache License 2.0. Lihat file LICENSE untuk informasi lebih lanjut.
 
 ```
 
