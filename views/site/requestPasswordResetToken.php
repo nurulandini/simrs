@@ -12,7 +12,7 @@ $this->title = 'Reset Password';
     <div class="row">
         <div class="contact-info reset-password p-5 px-3 rounded animate__animated animate__fadeInRight">
             <div class="text-center">
-                <h4 class="text-primary">TJSL/CSR</h4>
+                <h4 class="text-primary">Sistem Informasi Manajemen Klinik</h4>
                 <p class="text-muted f-18">Reset Password</p>
             </div>
 
@@ -29,7 +29,7 @@ $this->title = 'Reset Password';
                     <?= Html::a('<i class="mdi mdi-lock"></i> Masuk? Klik disini.', ['site/login'], ['class' => 'text-dark']) ?>
                 </div><br>
                 <div class="col-12 mt-3 text-center text-muted text-sm">
-                    Bappeda Kota Medan &copy; <?= date('Y') ?>
+                    SIMRS &copy; <?= date('Y') ?>
                 </div>
             </div>
         </div>

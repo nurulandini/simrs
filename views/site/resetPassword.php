@@ -4,7 +4,7 @@ use yii\helpers\Html;
 ?>
 <div class="contact-info p-5 mt-5 px-3 rounded bg-white animate__animated animate__fadeInRight">
     <div class="text-center">
-        <h4 class="text-primary">TJSL/CSR</h4>
+        <h4 class="text-primary">Sistem Informasi Manajemen Klinik</h4>
         <p class="text-muted f-18">Ganti Password</p>
     </div>
 

@@ -48,7 +48,7 @@ CrudAsset::register($this);
             <div class="login-box">
                 <div class="card ">
                     <div class="card-header text-center ">
-                        <h1 class="font">Masuk</h1>
+                        <h1 >Masuk</h1>
                     </div>
                     <div class="card-body">
                         <?php $form = ActiveForm::begin(['id' => 'login-form']) ?>
@@ -75,7 +75,7 @@ CrudAsset::register($this);
                         <?php ActiveForm::end(); ?>
                     </div>
 
-                    <div class="mt-4 pt-1 mb-0 text-center">
+                    <div class="mb-2 text-center">
                         <?= Html::a('<span class="fa fa-lock"></span> Lupa password? Klik disini.', ['site/request-password-reset'], ['class' => 'text-dark font']) ?>
                     </div>
                 </div>

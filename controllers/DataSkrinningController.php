@@ -75,12 +75,18 @@ class DataSkrinningController extends Controller
     public function actionIndex()
     {
         $searchModel = new DataSkrinningSearch();
+
         $loggedInUserId = Yii::$app->user->identity->id;
         $data_pegawai = User::findOne($loggedInUserId);
 
-        if ($data_pegawai) {
-            $poli_id = $data_pegawai->pegawai->poli_id; // Pastikan relasi pegawai ada di User model
-            $searchModel->poli_id = $poli_id; // Tambahkan filter poli_id ke SearchModel
+
+        if ($data_pegawai && $data_pegawai->pegawai) {
+            $poli_id = $data_pegawai->pegawai->poli_id ?? null;
+
+            // Jika poli_id ada, filter berdasarkan poli_id
+            if ($poli_id) {
+                $searchModel->poli_id = $poli_id;
+            }
         }
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

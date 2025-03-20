@@ -27,7 +27,7 @@ class PasswordResetRequestForm extends Model
                 'email',
                 'exist',
                 'targetClass' => '\app\models\User',
-                'filter' => ['status' => User::STATUS_ACTIVE],
+                'filter' => ['status' => 10],
                 'message' => 'Email Anda Tidak Terdaftar.'
             ],
         ];
@@ -41,10 +41,10 @@ class PasswordResetRequestForm extends Model
     public function sendEmail()
     {
         /* @var $user User */
-        $user = User::findOne([
-            'status' => User::STATUS_ACTIVE,
-            'email' => $this->email,
-        ]);
+        $user = User::find()
+            ->where(['status' => User::STATUS_ACTIVE])
+            ->andWhere(['like', 'LOWER(email)', strtolower($this->email)])
+            ->one();
 
         if (!$user) {
             return false;
@@ -65,7 +65,7 @@ class PasswordResetRequestForm extends Model
             )
             ->setFrom([Yii::$app->params['adminEmail'] => 'Bappeda Kota Medan'])
             ->setTo($this->email)
-            ->setSubject('Reset Password Aplikasi TJSL/CSR Pemerintah Kota Medan')
+            ->setSubject('Reset Password Aplikasi Sistem Informasi Manajemen Klinik')
             ->send();
     }
 }

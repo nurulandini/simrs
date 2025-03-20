@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Data Skrinning', ['create'], ['class' => 'btn btn-success', 'data-pjax' => 0]) ?>
+        
     </p>
 
     <?php Pjax::begin(['id' => 'data-rekam-medis-pjax', 'timeout' => 5000]); ?>
