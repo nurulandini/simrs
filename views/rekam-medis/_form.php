@@ -212,26 +212,29 @@ use yii\widgets\ActiveForm;
         </div>
     <?php endif; ?>
 
-    <!-- Layanan Medis -->
-    <div class="card shadow-sm p-4 mt-4">
-        <h4 class="mb-3 text-success">Layanan Medis</h4>
-        <div class="row">
-            <div class="col-md-12">
-                <?= Select2::widget([
-                    'name' => 'layanan_medis[]',
-                    'data' => ArrayHelper::map(LayananMedis::find()->all(), 'id', 'layanan'),
-                    'options' => [
-                        'placeholder' => 'Pilih layanan medis...',
-                        'multiple' => true,
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                        'tags' => true,
-                    ],
-                ]); ?>
+    <?php if ($model->isNewRecord): ?>
+        <!-- Layanan Medis -->
+        <div class="card shadow-sm p-4 mt-4">
+            <h4 class="mb-3 text-success">Layanan Medis</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <?= Select2::widget([
+                        'name' => 'layanan_medis[]',
+                        'data' => ArrayHelper::map(LayananMedis::find()->all(), 'id', 'layanan'),
+                        'options' => [
+                            'placeholder' => 'Pilih layanan medis...',
+                            'multiple' => true,
+                        ],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                            'tags' => true,
+                        ],
+                    ]); ?>
+                </div>
             </div>
         </div>
-    </div>
+
+    <?php endif; ?>
 
     <!-- Menampilkan Resep Obat -->
     <?php if (!$model->isNewRecord): ?>
@@ -289,7 +292,8 @@ use yii\widgets\ActiveForm;
         </div>
     <?php endif; ?>
 
-    <!-- Layanan Medis -->
+    <!-- Layanan Obat -->
+    <?php if ($model->isNewRecord): ?>
     <div class="card shadow-sm p-4 mt-4">
         <h4 class="mb-3 text-success">Resep Obat</h4>
         <div class="row">
@@ -308,6 +312,7 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
     <div class="card shadow-sm p-4 mt-4">
         <h4 class="mb-3 text-success">Catatan</h4>

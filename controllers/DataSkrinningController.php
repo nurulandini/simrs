@@ -118,11 +118,15 @@ class DataSkrinningController extends Controller
     public function actionCreate()
     {
         $model = new DataSkrinning();
-        $loggedInUserId = Yii::$app->user->identity->id;
-        $data_pegawai = User::find()->where(['id' => $loggedInUserId])->one();
+        // Pastikan user login dan memiliki pegawai
+        $data_pegawai = User::find()
+            ->joinWith('pegawai')
+            ->where(['user.id' => Yii::$app->user->id])
+            ->one();
 
-        if (!$data_pegawai) {
-            throw new NotFoundHttpException("Data pegawai tidak ditemukan.");
+        if (!$data_pegawai || !$data_pegawai->pegawai) {
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
+            return $this->redirect(['index']);
         }
 
         $transaction = Yii::$app->db->beginTransaction();

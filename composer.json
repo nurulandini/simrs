@@ -38,7 +38,7 @@
         "linslin/yii2-curl": "*",
         "kartik-v/yii2-money": "*",
         "symfony/google-mailer": "^5.4",
-        "phpoffice/phpspreadsheet": "^1.21",
+        "phpoffice/phpspreadsheet": "^4.1",
         "bevin1984/yii2-minio": "0.0.1",
         "lubosdz/yii2-captcha-extended": "^1.0",
         "alexantr/yii2-tinymce": "^1.0",

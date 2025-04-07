@@ -11,50 +11,106 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', [
 ]);
 ?>
 
-<div class="container mt-4">
+<div class="container mt-4" style="padding-bottom: 100px;">
     <h3 class="mb-4 font-weight-bold text-primary">
         <i class="fas fa-hospital"></i> Dashboard Klinik
     </h3>
 
     <!-- Cards Total Data -->
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <center>
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/uang.png') ?>" style="width: 15%;">
+                        <div class="flex-grow-1">
+                            <p class="text-dark fw-bold mb-0" style="font-size: 22px;">Rp. <?= $totaltransaksihariini == 0 ? 0 : number_format($totaltransaksihariini, 0, ',', '.') ?> </p>
+                            <p class="text-muted mb-0" style="font-size: 1rem;">Transaksi Hari Ini</p>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <center>
+                <div class="card shadow-sm border-0 p-4" style="background-color:#8b9ea4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/uang.png') ?>" style="width: 15%;">
+                        <div class="flex-grow-1">
+                            <p class="text-light fw-bold mb-0" style="font-size: 22px;">Rp. <?= $totaltransaksibulanini == 0 ? 0 : number_format($totaltransaksibulanini, 0, ',', '.') ?></p>
+                            <p class="text-light mb-0" style="font-size: 1rem;">Transaksi Bulan Ini</p>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <center>
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/pasien.png') ?>" style="width: 22%;">
+                        <div class="flex-grow-1">
+                            <h2 class="text-dark fw-bold mb-0"><?= $totalpengunjunghariini == 0 ? 0 : $totalpengunjunghariini ?></h2>
+                            <h4 class="text-muted mb-0" style="font-size: 1rem;">Total Pasien Hari Ini</h4>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <div class="col-md-3 mb-3">
+            <center>
+                <div class="card shadow-sm border-0 p-4" style="background-color:#8b9ea4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/pasien.png') ?>" style="width: 22%;">
+                        <div class="flex-grow-1">
+                            <h2 class="text-light fw-bold mb-0"><?= $total_pengunjung == 0 ? 0 : $total_pengunjung ?></h2>
+                            <h4 class="text-light mb-0" style="font-size: 1rem;">Total Pasien Bulan Ini</h4>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
 
     <div class="row">
-        <div class="col-md-12 mb-3">
+        <div class="col-md-6 mb-3">
             <center>
-                <div class="card">
-                    <div class="card-header text-center shadow-lg " style="background-color:#008080">
-                        <h2 style="color:white"><b> Rp <?= number_format($totaltransaksi, 0, ',', '.') ?></b></h2>
-                        <h4 style="color: white;">Total Transaksi</h4>
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/uang.png') ?>" style="width: 18%;">
+                        <div class="flex-grow-1">
+                            <h2 class="text-dark fw-bold mb-0">Rp. <?= $totaltransaksi == 0 ? 0 : number_format($totaltransaksi, 0, ',', '.') ?></h2>
+                            <h4 class="text-mute mb-0" style="font-size: 1rem;">Total Transaksi</h4>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <center>
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="<?= yii\helpers\Url::to('@web/img/pasien.png') ?>" style="width: 18%;">
+                        <div class="flex-grow-1">
+                            <h2 class="text-dark fw-bold mb-0"><?= $total_pengunjung_keseluruhan == 0 ? 0 : $total_pengunjung_keseluruhan ?></h2>
+                            <h4 class="text-mute mb-0" style="font-size: 1rem;">Total Pasien Keseluruhan</h4>
+                        </div>
                     </div>
                 </div>
             </center>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <center>
-                <div class="card">
-                    <div class="card-header text-center shadow-lg " style="background-color:#7a7a7a">
-                        <h2 style="color:white"><b><?= $total_pengunjung ?></b></h2>
-                        <h4 style="color: white;">Total Pengunjung Bulan Ini</h4>
-                    </div>
-                </div>
-            </center>
-        </div>
-        <div class="col-md-6 mb-3">
-            <center>
-                <div class="card">
-                    <div class="card-header text-center shadow-lg " style="background-color:#67838c">
-                        <h2 style="color:white;"><b><?= $total_pengunjung_keseluruhan ?></b></h2>
-                        <h4 style="color: white;">Total Pengunjung Keseluruhan</h4>
-                    </div>
-                </div>
-            </center>
-        </div>
-    </div>
+
+
+
+
+
     <div class="row">
         <div class="col-12 col-md-12 mb-3">
-            <div class="card mb-4">
+            <div class="card">
                 <div class="card-header" style="background-color: #468eae;">
                     <h4 style="font-size: 22px;text-align:center;color: white;">Grafik Kunjungan Pasien Per Bulan</h4>
                 </div>
@@ -65,8 +121,8 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', [
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-12 mb-3">
-            <div class="card mb-4">
+        <div class="col-12 col-md-12">
+            <div class="card">
                 <div class="card-header" style="background-color:rgb(70, 174, 117);">
                     <h4 style="font-size: 22px;text-align:center;color: white;">Pendapatan Klinik Per Bulan</h4>
                 </div>
@@ -78,86 +134,54 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', [
     </div>
     <!-- Grafik Pendapatan Klinik -->
 
-    <div class="col-12">
-        <div class="row" style=" display: flex;align-items: stretch;">
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card">
-                        <div class="card-header text-center" style="background-color: #987c73;">
-                            <h2 style="color:white"><b><?= $total_dokter ?></b></h2>
-                            <h4 style="color: white;font-size:1rem">Jumlah Dokter</h4> </a>
+
+    <div class="row g-4 mt-3" style=" display: flex;align-items: stretch;">
+        <?php
+        $items = [
+            ['icon' => 'fa-stethoscope', 'color' => '#008080', 'count' => $total_dokter, 'label' => 'Jumlah Dokter'],
+            ['icon' => 'fa-user-md', 'color' => '#d64242', 'count' => $total_perawat, 'label' => 'Jumlah Perawat'],
+            ['icon' => 'fa-user-md', 'color' => '#0d6efd', 'count' => $total_farmasi, 'label' => 'Jumlah Farmasi'],
+            ['icon' => 'fa-user', 'color' => '#ffa500', 'count' => $total_administrasi, 'label' => 'Jumlah Administrasi'],
+            ['icon' => 'fa-user', 'color' => '#b87e14', 'count' => $total_kasir, 'label' => 'Jumlah Kasir'],
+            ['icon' => 'fa-user', 'color' => '#808000', 'count' => $total_manajemen, 'label' => 'Jumlah Manajemen'],
+        ];
+        ?>
+
+
+        <?php foreach ($items as $item): ?>
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fa <?= $item['icon'] ?> fa-4x" style="color: <?= $item['color'] ?>;"></i>
+                        <div class="flex-grow-1">
+                            <h2 class="text-dark fw-bold mb-0"><?= $item['count'] ?></h2>
+                            <h4 class="text-muted mb-0" style="font-size: 1rem;"><?= $item['label'] ?></h4>
                         </div>
                     </div>
-                </center>
+                </div>
             </div>
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card-header text-center" style="background-color: #8b9ea4;">
-                        <h2 style="color:white"><b><?= $total_perawat ?></b></h2>
-                        <h4 style="color: white;font-size:1rem">Jumlah Perawat</h4>
-                    </div>
-                </center>
-            </div>
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card">
-                        <div class="card-header text-center" style="background-color: #964b00;">
-                            <h2 style="color:white"><b><?= $total_farmasi ?></b></h2>
-                            <h4 style="color:  white;font-size:1rem">Jumlah Farmasi</h4>
-
+        <?php endforeach; ?>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <center>
+                <div class="card shadow-lg border-0 p-4 mt-3">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center me-3">
+                            <i class="fa fa-user fa-4x" style="color:#b22222"></i>
+                        </div>
+                        <div class="text-center">
+                            <h2 class="text-dark fw-bold mb-1"><?= $total_pegawai ?></h2>
+                            <h4 class="text-muted mb-0" style="font-size: 1rem;">Jumlah Pegawai Keseluruhan</h4>
                         </div>
                     </div>
-                </center>
-            </div>
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card">
-                        <div class="card-header text-center" style="background-color:#CE6767">
-                            <h2 style="color: white"><b><?= $total_administrasi ?></b></h2>
-                            <h4 style="color: white;font-size:1rem">Jumlah Anggota Administrasi</h4>
-
-                        </div>
-                </center>
-            </div>
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card">
-                        <div class="card-header text-center" style="background-color:#628591">
-                            <h2 style="color:white"><b><?= $total_kasir ?></b></h2>
-                            <h4 style="color:  white;font-size:1rem">Jumlah Anggota Kasir</h4>
-
-                        </div>
-                    </div>
-                </center>
-            </div>
-            <div class="col-md-6" style="padding-top: 1rem;">
-                <center>
-                    <div class="card">
-                        <div class="card-header text-center" style="background-color:#808000;">
-                            <h2 style="color:white"><b><?= $total_manajemen ?></b></h2>
-                            <h4 style="color: white;font-size:1rem">Jumlah Anggota Manajemen</h4>
-
-                        </div>
-                </center>
-            </div>
-            <div class="col-12" style="padding-top:1rem">
-                <center>
-                    <div class="card">
-
-                        <div class="card-header text-center shadow-lg" style="background-color: #b22222;">
-                            <h2 style="color: white"><b><?= $total_pegawai ?></b></h2>
-                            <h4 style="color: white;font-size:16px">Jumlah Pegawai Keseluruhan</h4>
-
-                        </div>
-                    </div>
-                </center>
-            </div>
-
+                </div>
+            </center>
         </div>
     </div>
 
     <!-- Grafik Layanan Terbanyak -->
-    <div class="row" style="margin-top: 1rem;height:80%; ">
+    <div class="row" style="margin-top: 2rem;height:80%; ">
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-header" style="background-color: #A68EE9;">
@@ -208,7 +232,7 @@ $this->registerJs(
             new Chart(document.getElementById('chartKunjungan').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: kunjunganData.map(d => 'Bulan ' + d.bulan),
+                    labels: kunjunganData.map(d => 'Bulan ' + d.bulan_nama),
                     datasets: [{
                         label: 'Jumlah Kunjungan',
                         data: kunjunganData.map(d => d.total),
@@ -247,12 +271,11 @@ $this->registerJs(
             new Chart(document.getElementById('chartPendapatan').getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: pendapatanData.map(d => 'Bulan ' + d.bulan),
+                    labels: pendapatanData.map(d => 'Bulan ' + d.bulan_nama),
                     datasets: [{
                         label: 'Pendapatan (Rp)',
                         data: pendapatanData.map(d => d.total),
-                        backgroundColor: generateColor(pendapatanData), // Warna statis jika diinginkan
-                        borderColor: generateColor(pendapatanData),
+                        backgroundColor: generateColor(pendapatanData), 
                         borderWidth: 2
                     }]
                 }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\DataResepDetail;
 use app\models\search\DataResepDetailSearch;
+use app\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,6 +72,7 @@ class DataResepDetailController extends Controller
                 'dosis' => $item->dosis,
                 'biaya' => $item->biaya,
                 'status' => $item->status,
+                'updated_at' => $item->updated_at,
             ];
         }
 
@@ -99,6 +101,17 @@ class DataResepDetailController extends Controller
 
 
         $model = DataResepDetail::findOne($id);
+        // Pastikan user login dan memiliki pegawai
+        $data_pegawai = User::find()
+            ->joinWith('pegawai')
+            ->where(['user.id' => Yii::$app->user->id])
+            ->one();
+
+        if (!$data_pegawai || !$data_pegawai->pegawai) {
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
+            return $this->redirect(['index']);
+        }
+
         if ($model !== null) {
             $model->updated_by = Yii::$app->user->identity->id;;
             $model->status = 1; // Ubah status menjadi 'Dikonfirmasi'

@@ -42,9 +42,8 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'label' => 'Tanggal Rekam Medis',
-        'format' => ['date', 'php:d-m-Y'], // Format: DD-MM-YYYY HH:MM:SS
         'value' => function ($model) {
-            return $model->created_at;
+            return Yii::$app->formatter->asDatetime($model->created_at, 'php:d F Y');
         },
     ],
     [

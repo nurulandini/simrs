@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\DataPasien;
 use app\models\search\DataPasienSearch;
+use Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -116,7 +117,7 @@ class DataPasienController extends Controller
         }
 
         if ($model->load($request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['data-pendaftaran-pasien/create']);
         }
         return $this->render('create', compact('model', 'model_kecamatan'));
     }

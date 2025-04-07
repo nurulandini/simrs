@@ -28,10 +28,10 @@ $hariList = [
 ];
 
 // Konversi $groupedJadwal ke DataProvider agar bisa dipake di GridView
-$dataProvider = new ArrayDataProvider([
-    'allModels' => $groupedJadwal,
-    'pagination' => false,
-]);
+// $dataProvider = new ArrayDataProvider([
+//     'allModels' => $groupedJadwal,
+//     'pagination' => false,
+// ]);
 ?>
 
 <div class="data-jadwal-pegawai-index">

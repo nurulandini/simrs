@@ -18,7 +18,11 @@ use yii\widgets\MaskedInput;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nik')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'nik')->textInput([
+        'type' => 'number',
+        'maxlength' => 16,
+        'oninput' => "this.value = this.value.slice(0, 16)"
+    ]) ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
 

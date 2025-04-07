@@ -8,6 +8,7 @@ use app\models\RekamMedisDetail;
 use app\models\Transaksi;
 use app\models\search\TransaksiSearch;
 use Exception;
+use Mpdf\Mpdf;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,6 +16,10 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\ForbiddenHttpException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use yii\web\Response;
+
 
 /**
  * TransaksiController implements the CRUD actions for Transaksi model.
@@ -150,25 +155,22 @@ class TransaksiController extends Controller
         $rekamMedis = DataRekamMedis::findOne($id);
 
         if ($rekamMedis) {
-            // Ambil hasil diagnosa
             $hasilDiagnosa = Html::decode($rekamMedis->diagnosa);
-            // Ambil layanan medis
             $layanan = RekamMedisDetail::find()
-                ->joinWith('layanan') // Pastikan relasi ke layanan
+                ->joinWith('layanan')
                 ->where(['rekam_medis_id' => $id])
                 ->select(['rekam_medis_detail.*', 'layanan_medis.layanan AS nama_layanan'])
                 ->asArray()
                 ->all();
 
-            // Ambil resep obat beserta nama obat
+
             $resep = DataResepDetail::find()
-                ->joinWith('obat') // Pastikan relasi ke obat
+                ->joinWith('obat')
                 ->where(['rekam_medis_id' => $id])
                 ->select(['data_resep_detail.*', 'data_obat.nama AS nama_obat'])
                 ->asArray()
                 ->all();
 
-            // Hitung biaya layanan dan obat
             $biayaLayanan = RekamMedisDetail::find()->where(['rekam_medis_id' => $id])->sum('biaya') ?? 0;
             $biayaObat = DataResepDetail::find()->where(['rekam_medis_id' => $id])->sum('biaya') ?? 0;
 
@@ -204,7 +206,7 @@ class TransaksiController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model->status_pembayaran = 1; // Set menjadi lunas
+                $model->status_pembayaran = 1;
                 if ($model->save()) {
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', 'Status pembayaran berhasil diperbarui.');
@@ -276,5 +278,81 @@ class TransaksiController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionLaporanPdf()
+    {
+        $searchModel = new TransaksiSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false; // Ambil semua data
+
+        $mpdf = new \Mpdf\Mpdf();
+
+        $html = $this->renderPartial('laporan_pdf', [
+            'dataProvider' => $dataProvider,
+        ]);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('Laporan_Transaksi.pdf', 'D');
+        exit;
+    }
+
+    public function actionLaporanExcel()
+    {
+        $searchModel = new TransaksiSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = false; 
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Header
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Tanggal');
+        $sheet->setCellValue('C1', 'Nama Pasien');
+        $sheet->setCellValue('D1', 'Total');
+        $sheet->setCellValue('E1', 'Detail Layanan');
+        $sheet->setCellValue('F1', 'Resep Obat');
+
+        // Data
+        $row = 2;
+        $no = 1;
+        foreach ($dataProvider->models as $model) {
+            $detailLayanan = "";
+            foreach ($model->rekamMedis->rekamMedisDetails as $layanan) {
+                $detailLayanan .= $layanan->layanan->layanan . " - Rp " . number_format($layanan->biaya, 0, ',', '.') . "\n";
+            }
+
+           
+            $resepObat = "";
+            foreach ($model->rekamMedis->dataResepDetails as $resep) {
+                $resepObat .= $resep->obat->nama . " - " . $resep->jumlah . " " . $resep->obat->satuan->satuan . "\n";
+            }
+
+            $sheet->setCellValue('A' . $row, $no++);
+            $sheet->setCellValue('B' . $row, Yii::$app->formatter->asDate($model->created_at, 'php:d-m-Y'));
+            $sheet->setCellValue('C' . $row, $model->rekamMedis->skrinning->pendaftaran->pasien->nama);
+            $sheet->setCellValue('D' . $row, $model->total_harga);
+            $sheet->setCellValue('E' . $row, $detailLayanan);
+            $sheet->setCellValue('F' . $row, $resepObat);
+
+            $row++;
+        }
+
+       
+        foreach (range('A', 'F') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $filename = 'Laporan_Transaksi.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit;
     }
 }

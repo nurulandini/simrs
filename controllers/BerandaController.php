@@ -40,6 +40,7 @@ class BerandaController extends \yii\web\Controller
         $connection = Yii::$app->db;
 
         // **1. Data untuk Card (Total Angka)**
+        $hariSekarang = date('d'); // Mendapatkan bulan saat ini
         $bulanSekarang = date('m'); // Mendapatkan bulan saat ini
         $tahunSekarang = date('Y'); // Mendapatkan tahun saat ini
 
@@ -50,8 +51,38 @@ class BerandaController extends \yii\web\Controller
             ->select(['COUNT(*) as total', 'MONTH(tanggal_kunjungan) as bulan', 'YEAR(tanggal_kunjungan) as tahun'])
             ->where(['MONTH(tanggal_kunjungan)' => $bulanSekarang])
             ->andWhere(['YEAR(tanggal_kunjungan)' => $tahunSekarang])
-            ->groupBy(['bulan', 'tahun']) // Mengelompokkan berdasarkan bulan dan tahun
-            ->one(); // Ambil satu hasil (jumlah pengunjung)
+            ->groupBy(['bulan', 'tahun'])
+            ->one();
+
+        $totalTransaksiBulanIni = (new Query())
+            ->from('transaksi')
+            ->select(["SUM(total_harga) AS total"])
+            ->where("MONTH(FROM_UNIXTIME(created_at)) = :bulan AND YEAR(FROM_UNIXTIME(created_at)) = :tahun", [
+                ':bulan' => $bulanSekarang,
+                ':tahun' => $tahunSekarang
+            ])
+            ->andWhere(['status_pembayaran' => 1])
+            ->scalar();
+
+        $totalTransaksiHariIni = (new Query())
+            ->from('transaksi')
+            ->select(["SUM(total_harga) AS total"])
+            ->where("DAY(FROM_UNIXTIME(created_at)) = :hari AND MONTH(FROM_UNIXTIME(created_at)) = :bulan AND YEAR(FROM_UNIXTIME(created_at)) = :tahun", [
+                ':hari' => $hariSekarang,
+                ':bulan' => $bulanSekarang,
+                ':tahun' => $tahunSekarang
+            ])
+            ->andWhere(['status_pembayaran' => 1])
+            ->scalar();
+
+        $totalPengunjungHariIni = (new Query())
+            ->from('data_pendaftaran_pasien')
+            ->select(['COUNT(*) as total', 'DAY(tanggal_kunjungan) as hari', 'MONTH(tanggal_kunjungan) as bulan', 'YEAR(tanggal_kunjungan) as tahun'])
+            ->where(['DAY(tanggal_kunjungan)' => $hariSekarang])
+            ->andwhere(['MONTH(tanggal_kunjungan)' => $bulanSekarang])
+            ->andWhere(['YEAR(tanggal_kunjungan)' => $tahunSekarang])
+            ->groupBy(['hari', 'bulan', 'tahun'])
+            ->scalar();
 
         $totalPengunjung = $totalPengunjungBulanIni['total'] ?? 0;
         $totaldata_pegawai = (new Query())->from('data_pegawai')->count();
@@ -74,18 +105,36 @@ class BerandaController extends \yii\web\Controller
             ->groupBy('data_poli.id')
             ->all();
 
-        // **2. Grafik Kunjungan Pasien Per Bulan**
+
         $kunjunganPerBulan = (new Query())
             ->select([
-                "DATE_FORMAT(FROM_UNIXTIME(created_at), '%M') AS bulan",
+                "MONTH(FROM_UNIXTIME(created_at)) AS bulan_angka",
+                "DATE_FORMAT(FROM_UNIXTIME(created_at), '%M') AS bulan_nama",
                 "COUNT(*) AS total"
             ])
             ->from('data_rekam_medis')
-            ->groupBy('bulan')
-            ->orderBy('bulan')
+            ->groupBy('bulan_angka, bulan_nama')
+            ->orderBy('bulan_angka')
             ->all();
 
-        // **3. Grafik Layanan Terbanyak Digunakan**
+        $bulanIndo = [
+            'January' => 'Januari',
+            'February' => 'Februari',
+            'March' => 'Maret',
+            'April' => 'April',
+            'May' => 'Mei',
+            'June' => 'Juni',
+            'July' => 'Juli',
+            'August' => 'Agustus',
+            'September' => 'September',
+            'October' => 'Oktober',
+            'November' => 'November',
+            'December' => 'Desember'
+        ];
+
+        foreach ($kunjunganPerBulan as &$data) {
+            $data['bulan_nama'] = $bulanIndo[$data['bulan_nama']] ?? $data['bulan_nama'];
+        }
         $layananTerbanyak = (new Query())
             ->select([
                 'layanan_medis.layanan AS layanan',
@@ -98,7 +147,7 @@ class BerandaController extends \yii\web\Controller
             ->limit(5)
             ->all();
 
-        // **4. Grafik Obat yang Paling Sering Diresepkan**
+
         $obatTerbanyak = (new Query())
             ->select([
                 'data_obat.nama AS obat',
@@ -111,25 +160,31 @@ class BerandaController extends \yii\web\Controller
             ->limit(5)
             ->all();
 
-        // **5. Grafik Pendapatan Klinik (Berdasarkan transaksi)**
-        $pendapatanPerBulan = (new Query())
+
+            $pendapatanPerBulan = (new \yii\db\Query())
             ->select([
-                "DATE_FORMAT(FROM_UNIXTIME(created_at), '%M') AS bulan",
+                "MONTH(FROM_UNIXTIME(created_at)) AS bulan_angka",
+                "DATE_FORMAT(FROM_UNIXTIME(created_at), '%M') AS bulan_nama",
                 "SUM(total_harga) AS total"
             ])
             ->from('transaksi')
-            ->groupBy('bulan')
-            ->orderBy('bulan')
+            ->groupBy('bulan_angka, bulan_nama')
+            ->orderBy('bulan_angka')
             ->all();
+    
+        foreach ($pendapatanPerBulan as &$data) {
+            $data['bulan_nama'] = $bulanIndo[$data['bulan_nama']] ?? $data['bulan_nama'];
+        }
 
         $totalTransaksi = (new Query())
             ->select([
                 "SUM(total_harga) AS total"
             ])
             ->from('transaksi')
+            ->where(['status_pembayaran' => 1])
             ->one();
         $totalHarga = $totalTransaksi['total'];
-        // **6. Grafik Kunjungan Berdasarkan Poli/Dokter**
+
         $kunjunganPerPoli = (new Query())
             ->select([
                 'data_poli.poli AS poli',
@@ -172,7 +227,7 @@ class BerandaController extends \yii\web\Controller
             ->where(['item_name' => 'manajemen'])
             ->count();
 
-        // Kirim Data ke View
+
         return $this->render('beranda', [
             'total_pengunjung' => $totalPengunjung,
             'total_pegawai' => $totaldata_pegawai,
@@ -190,7 +245,10 @@ class BerandaController extends \yii\web\Controller
             'pendapatanPerBulan' => $pendapatanPerBulan,
             'kunjunganPerPoli' => $kunjunganPerPoli,
             'total_pengunjung_keseluruhan' => $totalpengunjung_keseluruhan,
-            'totaltransaksi' => $totalHarga
+            'totaltransaksi' => $totalHarga,
+            'totalpengunjunghariini' => $totalPengunjungHariIni,
+            'totaltransaksibulanini' => $totalTransaksiBulanIni,
+            'totaltransaksihariini' => $totalTransaksiHariIni
         ]);
     }
 }

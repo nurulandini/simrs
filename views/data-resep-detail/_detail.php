@@ -31,7 +31,16 @@ use yii\helpers\Html;
                     ]) ?>
                 </td>
                 <td>
-                    
+                    <?php
+                    if ($resep['status'] == 1 && !empty($resep['updated_at'])) {
+                        echo Yii::$app->formatter->asDatetime($resep['updated_at'], 'php:d F Y / H.i') . ' WIB';
+                    } else {
+                        echo '-';
+                    }
+                    ?>
+                </td>
+                <td>
+
                     <?php if ($resep['status'] == 0): ?>
                         <?= Html::a('Konfirmasi Tebus Resep', ['konfirmasi', 'id' => $resep['id']], [
                             'class' => 'btn btn-sm btn-success',

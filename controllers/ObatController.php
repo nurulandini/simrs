@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\DataObat;
 use app\models\search\DataObatSearch;
+use app\models\User;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,6 +75,16 @@ class ObatController extends Controller
     public function actionCreate()
     {
         $model = new DataObat();
+        // Pastikan user login dan memiliki pegawai
+        $data_pegawai = User::find()
+            ->joinWith('pegawai')
+            ->where(['user.id' => Yii::$app->user->id])
+            ->one();
+
+        if (!$data_pegawai || !$data_pegawai->pegawai) {
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
+            return $this->redirect(['index']);
+        }
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {

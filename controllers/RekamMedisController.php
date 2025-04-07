@@ -105,14 +105,14 @@ class RekamMedisController extends Controller
     {
         $model = new DataRekamMedis();
 
-        // Pastikan user login dan memiliki pegawai
+
         $data_pegawai = User::find()
             ->joinWith('pegawai')
             ->where(['user.id' => Yii::$app->user->id])
             ->one();
 
         if (!$data_pegawai || !$data_pegawai->pegawai) {
-            Yii::$app->session->setFlash('error', 'Anda tidak memiliki data pegawai.');
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
             return $this->redirect(['index']);
         }
 
@@ -139,6 +139,7 @@ class RekamMedisController extends Controller
 
                 // Set pasien_id dari skrining
                 $model->skrinning_id = $skrinning->id;
+                $model->status = 1;
 
                 if (!$model->save()) {
                     throw new Exception('Gagal menyimpan rekam medis.');
@@ -201,11 +202,11 @@ class RekamMedisController extends Controller
                 }
 
                 $skrinning->status = 2;
-                $model->status = 1;
                 if (!$skrinning->save()) {
                     $transaction->rollBack();
                     throw new Exception('Gagal memperbarui status skrining.');
                 }
+                
 
                 $transaction->commit(); // Commit transaksi jika semua sukses
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -297,6 +298,7 @@ class RekamMedisController extends Controller
 
                 // Set pasien_id dari skrining
                 $model->skrinning_id = $skrinning->id;
+                $model->status = 1;
 
                 if (!$model->save()) {
                     throw new Exception('Gagal memperbarui rekam medis.');
@@ -386,7 +388,6 @@ class RekamMedisController extends Controller
                         }
                     }
                 }
-
                 $transaction->commit(); // Commit transaksi jika semua sukses
                 return $this->redirect(['view', 'id' => $model->id]);
             } catch (Exception $e) {

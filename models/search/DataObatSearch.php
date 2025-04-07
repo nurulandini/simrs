@@ -14,11 +14,16 @@ class DataObatSearch extends DataObat
     /**
      * {@inheritdoc}
      */
+
+    public $persediaan_sort;
+
     public function rules()
     {
+
+
         return [
             [['id', 'kategori_id', 'persediaan', 'satuan_id', 'harga_per_unit', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['nama', 'deskripsi', 'tanggal_kedaluwarsa'], 'safe'],
+            [['nama', 'deskripsi', 'tanggal_kedaluwarsa', 'persediaan_sort'], 'safe'],
         ];
     }
 
@@ -46,6 +51,9 @@ class DataObatSearch extends DataObat
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
+            ],
         ]);
 
         $this->load($params);
@@ -55,6 +63,13 @@ class DataObatSearch extends DataObat
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        if ($this->persediaan_sort === 'asc') {
+            $query->orderBy(['persediaan' => SORT_ASC]);
+        } elseif ($this->persediaan_sort === 'desc') {
+            $query->orderBy(['persediaan' => SORT_DESC]);
+        }
+
 
         // grid filtering conditions
         $query->andFilterWhere([

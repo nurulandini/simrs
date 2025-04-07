@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /** @var app\models\search\DataObatSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Data Obats';
+$this->title = 'Data Obat';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="data-obat-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Data Obat', ['create'], [
+        <?= Html::a('Tambah Obat Baru', ['create'], [
             'class' => 'btn btn-success',
             'role' => 'modal-remote', // Jika pakai modal AJAX
         ]) ?>
@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => require(__DIR__ . '/_columns.php'),
-        'pjax' => true, // Tambahkan Pjax di dalam GridView untuk AJAX reload
         'toolbar' => [
             '{toggleData}',
             '{export}',

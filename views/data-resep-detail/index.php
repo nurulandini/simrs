@@ -37,7 +37,7 @@ CrudAsset::register($this);
                     Html::a(
                         Yii::t('yii2-ajaxcrud', 'Create New'),
                         ['create'],
-                        ['role' => 'modal-remote', 'title' => Yii::t('yii2-ajaxcrud', 'Create New') . ' Data Jadwal Pegawais', 'class' => 'btn btn-outline-primary']
+                        ['role' => 'modal-remote', 'title' => Yii::t('yii2-ajaxcrud', 'Create New') . ' Data Resep', 'class' => 'btn btn-outline-primary']
                     ) .
                         Html::a(
                             '<i class="fa fa-redo"></i>',

@@ -43,7 +43,8 @@ class DataJadwalPegawaiSearch extends DataJadwalPegawai
     public function search($params)
     {
         $query = DataJadwalPegawai::find()
-            ->joinWith('pegawai pegawai'); // Pastikan ada relasi dengan tabel pegawai
+            ->joinWith('pegawai pegawai')
+            ->groupBy('data_jadwal_pegawai.pegawai_id'); // Pastikan ada relasi dengan tabel pegawai
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

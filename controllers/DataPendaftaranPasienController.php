@@ -103,6 +103,19 @@ class DataPendaftaranPasienController extends Controller
 
         $request = Yii::$app->request;
         $model = new DataPendaftaranPasien();
+
+
+        // Pastikan user login dan memiliki pegawai
+        $data_pegawai = User::find()
+            ->joinWith('pegawai')
+            ->where(['user.id' => Yii::$app->user->id])
+            ->one();
+
+        if (!$data_pegawai || !$data_pegawai->pegawai) {
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
+            return $this->redirect(['index']);
+        }
+
         $model_poli = new \yii\base\DynamicModel(['poli_id']);
         $model_poli->addRule(['poli_id'], 'safe')->setAttributeLabels(['poli_id' => 'Poli']);
 

@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 return [
@@ -26,10 +27,12 @@ return [
         'value' => function ($model) {
             return $model->kategori->kategori;
         },
+        'filter' => \yii\helpers\ArrayHelper::map(\app\models\KategoriObat::find()->all(), 'id', 'kategori'),
     ],
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'deskripsi',
+        'filter' => false
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -38,9 +41,16 @@ return [
     [
         'class' => '\kartik\grid\DataColumn',
         'attribute' => 'persediaan',
-        'value' => function ($model) {
-            return number_format($model->persediaan, 0, ",", ".");
-        },
+        'format' => ['decimal', 0],
+        'filter' => Html::activeDropDownList(
+            $searchModel,
+            'persediaan_sort',
+            [
+                'asc' => 'Paling Sedikit',
+                'desc' => 'Paling Banyak',
+            ],
+            ['class' => 'form-control', 'prompt' => 'Urutkan']
+        ),
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -49,6 +59,7 @@ return [
         'value' => function ($model) {
             return $model->satuan->satuan;
         },
+        'filter' => false
     ],
     [
         'class' => '\kartik\grid\DataColumn',
@@ -58,6 +69,8 @@ return [
         'value' => function ($model) {
             return 'Rp. ' . number_format($model->harga_per_unit, 0, ",", ".");
         },
+        'filter' => false
+
     ],
     [
         'class' => 'kartik\grid\ActionColumn',

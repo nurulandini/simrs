@@ -25,8 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'data-transaksi-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => require(__DIR__ . '/_columns.php'), // Panggil file _columns.php
+        'columns' => require(__DIR__ . '/_columns.php'),
+        'panel' => [
+            'heading' => '<h3 class="panel-title">Daftar Transaksi</h3>',
+            'before' => Html::a('<i class="fa fa-file-pdf"></i> Cetak PDF', ['laporan-pdf'], [
+                'class' => 'btn btn-danger btn-sm',
+                'target' => '_blank',
+                'data-pjax' => 0
+            ]) . ' ' .
+                Html::a('<i class="fa fa-file-excel"></i> Download Excel', ['laporan-excel'], [
+                    'class' => 'btn btn-success btn-sm',
+                    'data-pjax' => 0
+                ]),
+        ],
     ]); ?>
+
 
     <?php Pjax::end(); ?>
 

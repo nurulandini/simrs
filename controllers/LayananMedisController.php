@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\LayananMedis;
 use app\models\search\LayananMedisSearch;
+use app\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -86,6 +87,16 @@ class LayananMedisController extends Controller
     {
         $request = Yii::$app->request;
         $model = new LayananMedis();
+        // Pastikan user login dan memiliki pegawai
+        $data_pegawai = User::find()
+            ->joinWith('pegawai')
+            ->where(['user.id' => Yii::$app->user->id])
+            ->one();
+
+        if (!$data_pegawai || !$data_pegawai->pegawai) {
+            Yii::$app->session->setFlash('error', 'Anda tidak memiliki akses untuk ini.');
+            return $this->redirect(['index']);
+        }
 
         if ($request->isAjax) {
             /*
